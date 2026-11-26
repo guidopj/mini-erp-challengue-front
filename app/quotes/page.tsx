@@ -12,6 +12,7 @@ import {
 } from "@mui/material";
 
 import AddIcon from "@mui/icons-material/Add";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 import {
   getQuotes,
@@ -104,6 +105,14 @@ export default function QuotesPage() {
           mb: 3,
         }}
       >
+        <Button
+          component={Link}
+          href="/"
+          startIcon={<ArrowBackIcon />}
+          sx={{ mb: 2 }}
+        >
+          Volver
+        </Button>
         <Typography variant="h4" component="h1">
           Presupuestos
         </Typography>
