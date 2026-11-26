@@ -15,7 +15,7 @@ import AddIcon from "@mui/icons-material/Add";
 
 import {
   getQuotes,
-  facturarPresupuesto,
+  invoiceQuote,
   duplicateQuote,
 } from "../services/quoteService";
 import { Quote } from "../types/quote";
@@ -25,11 +25,11 @@ export default function QuotesPage() {
   const [quotes, setQuotes] = useState<Quote[]>([]);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
-  const [facturandoId, setFacturandoId] = useState<number | null>(null);
-  const [duplicandoId, setDuplicandoId] = useState<number | null>(null);
+  const [invoicingId, setInvoicingId] = useState<number | null>(null);
+  const [duplicatingId, setDuplicatingId] = useState<number | null>(null);
   const [expandedId, setExpandedId] = useState<number | null>(null);
 
-  async function cargarPresupuestos() {
+  async function loadQuotes() {
     try {
       setLoading(true);
       const data = await getQuotes();
@@ -46,16 +46,16 @@ export default function QuotesPage() {
   }
 
   useEffect(() => {
-    cargarPresupuestos();
+    loadQuotes();
   }, []);
 
-  async function handleFacturar(presupuestoId: number) {
+  async function handleInvoice(invoiceId: number) {
     try {
       setError("");
-      setFacturandoId(presupuestoId);
+      setInvoicingId(invoiceId);
 
-      await facturarPresupuesto(presupuestoId);
-      await cargarPresupuestos();
+      await invoiceQuote(invoiceId);
+      await loadQuotes();
     } catch (err) {
       setError(
         err instanceof Error
@@ -63,17 +63,17 @@ export default function QuotesPage() {
           : "No se pudo facturar el presupuesto.",
       );
     } finally {
-      setFacturandoId(null);
+      setInvoicingId(null);
     }
   }
 
-  async function handleDuplicar(presupuestoId: number) {
+  async function handleDuplicate(invoiceId: number) {
     try {
       setError("");
-      setDuplicandoId(presupuestoId);
+      setDuplicatingId(invoiceId);
 
-      await duplicateQuote(presupuestoId);
-      await cargarPresupuestos();
+      await duplicateQuote(invoiceId);
+      await loadQuotes();
     } catch (err) {
       setError(
         err instanceof Error
@@ -81,11 +81,11 @@ export default function QuotesPage() {
           : "No se pudo duplicar el presupuesto.",
       );
     } finally {
-      setDuplicandoId(null);
+      setDuplicatingId(null);
     }
   }
 
-  function handleExpandir(presupuestoId: number) {
+  function handleExpand(presupuestoId: number) {
     setExpandedId((currentId) =>
       currentId === presupuestoId ? null : presupuestoId,
     );
@@ -126,12 +126,12 @@ export default function QuotesPage() {
       ) : (
         <QuoteTable
           quotes={quotes}
-          facturandoId={facturandoId}
-          duplicandoId={duplicandoId}
+          invoicingId={invoicingId}
+          duplicatingId={duplicatingId}
           expandedId={expandedId}
-          onExpandir={handleExpandir}
-          onFacturar={handleFacturar}
-          onDuplicar={handleDuplicar}
+          onExpand={handleExpand}
+          onInvoice={handleInvoice}
+          onDuplicate={handleDuplicate}
         />
       )}
     </Container>

@@ -13,22 +13,22 @@ import QuoteRow from "./quoteRow";
 
 interface QuoteTableProps {
   quotes: Quote[];
-  facturandoId: number | null;
-  duplicandoId: number | null;
+  invoicingId: number | null;
+  duplicatingId: number | null;
   expandedId: number | null;
-  onExpandir: (id: number) => void;
-  onFacturar: (id: number) => void;
-  onDuplicar: (id: number) => void;
+  onExpand: (id: number) => void;
+  onInvoice: (id: number) => void;
+  onDuplicate: (id: number) => void;
 }
 
 export default function QuoteTable({
   quotes,
-  facturandoId,
-  duplicandoId,
+  invoicingId,
+  duplicatingId,
   expandedId,
-  onExpandir,
-  onFacturar,
-  onDuplicar,
+  onExpand,
+  onInvoice,
+  onDuplicate,
 }: QuoteTableProps) {
   return (
     <TableContainer component={Paper} elevation={2}>
@@ -53,11 +53,11 @@ export default function QuoteTable({
               key={quote.id}
               quote={quote}
               isExpanded={expandedId === quote.id}
-              facturandoId={facturandoId}
-              duplicandoId={duplicandoId}
-              onExpandir={onExpandir}
-              onFacturar={onFacturar}
-              onDuplicar={onDuplicar}
+              invoicingId={invoicingId}
+              duplicatingId={duplicatingId}
+              onExpand={onExpand}
+              onInvoice={onInvoice}
+              onDuplicate={onDuplicate}
             />
           ))}
 

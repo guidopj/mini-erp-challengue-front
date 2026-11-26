@@ -55,10 +55,8 @@ export async function createQuote(data: {
   }
 }
 
-export async function facturarPresupuesto(
-  presupuestoId: number,
-): Promise<void> {
-  const response = await fetch(`/api/Facturas/facturar/${presupuestoId}`, {
+export async function invoiceQuote(invoiceId: number): Promise<void> {
+  const response = await fetch(`/api/Facturas/facturar/${invoiceId}`, {
     method: "POST",
   });
 
@@ -68,9 +66,9 @@ export async function facturarPresupuesto(
   }
 }
 
-export async function duplicateQuote(presupuestoId: number): Promise<void> {
+export async function duplicateQuote(invoiceId: number): Promise<void> {
   // No necesitamos enviar un body porque el backend obtiene todos los datos del presupuesto original.
-  const response = await fetch(`/api/Presupuestos/${presupuestoId}/duplicar`, {
+  const response = await fetch(`/api/Presupuestos/${invoiceId}/duplicar`, {
     method: "POST",
   });
 

@@ -19,11 +19,11 @@ import QuoteItems from "./quoteItems";
 interface QuoteRowProps {
   quote: Quote;
   isExpanded: boolean;
-  facturandoId: number | null;
-  duplicandoId: number | null;
-  onExpandir: (id: number) => void;
-  onFacturar: (id: number) => void;
-  onDuplicar: (id: number) => void;
+  invoicingId: number | null;
+  duplicatingId: number | null;
+  onExpand: (id: number) => void;
+  onInvoice: (id: number) => void;
+  onDuplicate: (id: number) => void;
 }
 
 const estadoColors: Record<string, "default" | "success" | "error" | "info"> = {
@@ -36,11 +36,11 @@ const estadoColors: Record<string, "default" | "success" | "error" | "info"> = {
 export default function QuoteRow({
   quote,
   isExpanded,
-  facturandoId,
-  duplicandoId,
-  onExpandir,
-  onFacturar,
-  onDuplicar,
+  invoicingId,
+  duplicatingId,
+  onExpand,
+  onInvoice,
+  onDuplicate,
 }: QuoteRowProps) {
   return (
     <>
@@ -48,7 +48,7 @@ export default function QuoteRow({
         <TableCell padding="checkbox">
           <IconButton
             size="small"
-            onClick={() => onExpandir(quote.id)}
+            onClick={() => onExpand(quote.id)}
             aria-label="Ver artículos del presupuesto"
           >
             {isExpanded ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
@@ -94,24 +94,24 @@ export default function QuoteRow({
             <Button
               variant="outlined"
               size="small"
-              onClick={() => onDuplicar(quote.id)}
-              disabled={duplicandoId !== null || facturandoId !== null}
+              onClick={() => onDuplicate(quote.id)}
+              disabled={duplicatingId !== null || invoicingId !== null}
             >
-              {duplicandoId === quote.id ? "Duplicando..." : "Duplicar"}
+              {duplicatingId === quote.id ? "Duplicando..." : "Duplicar"}
             </Button>
 
             {quote.estado !== "Facturado" && (
               <Button
                 variant="contained"
                 size="small"
-                onClick={() => onFacturar(quote.id)}
+                onClick={() => onInvoice(quote.id)}
                 disabled={
-                  facturandoId !== null ||
-                  duplicandoId !== null ||
+                  invoicingId !== null ||
+                  duplicatingId !== null ||
                   quote.estado === "Facturada"
                 }
               >
-                {facturandoId === quote.id ? "Facturando..." : "Facturar"}
+                {invoicingId === quote.id ? "Facturando..." : "Facturar"}
               </Button>
             )}
           </Box>
